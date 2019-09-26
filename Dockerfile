@@ -49,5 +49,4 @@ RUN cd /jm/joinmarket-clientserver \
 	&& python setupall.py --daemon \
 	&& python setupall.py --client-bitcoin
 
-COPY docker-entrypoint.sh /usr/local/bin/
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT [ "bash" ]
