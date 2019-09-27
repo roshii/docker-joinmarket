@@ -47,6 +47,7 @@ RUN cd /jm/joinmarket-clientserver \
 	&& virtualenv jmvenv \
 	&& . jmvenv/bin/activate \
 	&& python setupall.py --daemon \
-	&& python setupall.py --client-bitcoin
+	&& python setupall.py --client-bitcoin \
+	&& mkdir /jm/joinmarket-clientserver/scripts/wallets
 
 ENTRYPOINT [ "bash" ]
