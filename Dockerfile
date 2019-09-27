@@ -38,16 +38,16 @@ RUN set -ex \
 	&& gpg --keyserver keyserver.ubuntu.com --recv-keys "$JM_PGP_KEY" \
 	&& wget -qO jm.asc "$JM_ASC_URL" \
 	&& gpg --verify jm.asc jm.tar.gz \
-	&& mkdir /jm/joinmarket-clientserver \
-	&& tar -xzvf jm.tar.gz -C /jm/joinmarket-clientserver --strip-components=1 \
+	&& mkdir /jm/clientserver \
+	&& tar -xzvf jm.tar.gz -C /jm/clientserver --strip-components=1 \
 	&& rm -rf /tmp/*
 
 # Setup JoinMarket virtual environment
-RUN cd /jm/joinmarket-clientserver \
+RUN cd /jm/clientserver \
 	&& virtualenv jmvenv \
 	&& . jmvenv/bin/activate \
 	&& python setupall.py --daemon \
 	&& python setupall.py --client-bitcoin \
-	&& mkdir /jm/joinmarket-clientserver/scripts/wallets
+	&& mkdir /jm/clientserver/scripts/wallets
 
 ENTRYPOINT [ "bash" ]
