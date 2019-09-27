@@ -47,7 +47,6 @@ RUN cd /jm/clientserver \
 	&& virtualenv jmvenv \
 	&& . jmvenv/bin/activate \
 	&& python setupall.py --daemon \
-	&& python setupall.py --client-bitcoin \
-	&& mkdir /jm/clientserver/scripts/wallets
+	&& python setupall.py --client-bitcoin
 
 ENTRYPOINT [ "bash" ]
