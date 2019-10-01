@@ -56,6 +56,6 @@ RUN set -ex \
 	&& python setupall.py --daemon \
 	&& python setupall.py --client-bitcoin
 
-COPY docker-entrypoint.sh /usr/local/bin/
+COPY entrypoint.sh /usr/local/bin/
 
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["entrypoint.sh"]
