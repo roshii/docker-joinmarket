@@ -27,6 +27,10 @@ RUN set -ex \
 	--no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/*
 
+# add user and group with default ids
+RUN groupadd joinmarket \
+	&& useradd -g joinmarket -s /bin/bash -m -d /jm joinmarket
+
 # Install JoinMarket source code
 RUN set -ex \
 	&& cd /tmp \
@@ -48,10 +52,6 @@ RUN set -ex \
 	&& pip install -r /jm/clientserver/requirements-dev.txt \
 	&& python setupall.py --daemon \
 	&& python setupall.py --client-bitcoin
-
-# add user and group with default ids
-RUN groupadd joinmarket \
-	&& useradd -g joinmarket -s /bin/bash -m -d /jm joinmarket
 
 WORKDIR /jm/clientserver/scripts
 
