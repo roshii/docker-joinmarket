@@ -6,9 +6,9 @@ ENV JM_VERSION 0.5.5
 ENV JM_URL https://github.com/JoinMarket-Org/joinmarket-clientserver/archive/v$JM_VERSION.tar.gz
 ENV JM_ASC_URL https://github.com/JoinMarket-Org/joinmarket-clientserver/releases/download/v$JM_VERSION/joinmarket-clientserver-$JM_VERSION.tar.gz.asc
 ENV JM_PGP_KEY 2B6FC204D9BF332D062B461A141001A1AF77F20B
+ENV VIRTUAL_ENV=/opt/venv
 
 # Install OS utilities
-
 RUN set -ex \
 	&& apt-get update \
 	&& DEBIAN_FRONTEND=noninteractive apt-get install -y \
@@ -27,12 +27,6 @@ RUN set -ex \
 	--no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/*
 
-RUN python3 -m pip install virtualenv --no-cache-dir
-
-# add user and group with default ids
-RUN groupadd joinmarket \
-	&& useradd -g joinmarket -s /bin/bash -m -d /jm joinmarket
-
 # Install JoinMarket source code
 RUN set -ex \
 	&& cd /tmp \
@@ -44,11 +38,10 @@ RUN set -ex \
 	&& tar -xzvf jm.tar.gz -C /jm/clientserver --strip-components=1 \
 	&& rm -rf /tmp/*
 
-ENV VIRTUAL_ENV=/opt/venv
+RUN python3 -m pip install virtualenv --no-cache-dir
+
 RUN python3 -m virtualenv --python=/usr/bin/python3 $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-
-WORKDIR /jm/clientserver
 
 # Install dependencies:
 RUN set -ex \
@@ -56,6 +49,13 @@ RUN set -ex \
 	&& python setupall.py --daemon \
 	&& python setupall.py --client-bitcoin
 
+# add user and group with default ids
+RUN groupadd joinmarket \
+	&& useradd -g joinmarket -s /bin/bash -m -d /jm joinmarket
+
+WORKDIR /jm/clientserver/scripts
+
 COPY entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
+CMD ["bash"]

@@ -1,6 +1,5 @@
 #!/bin/sh
 set -e
 
-chown -R joinmarket .
-cd /jm/clientserver/scripts
+chown -R joinmarket /jm
 exec gosu joinmarket "$@"
