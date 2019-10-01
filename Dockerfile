@@ -47,9 +47,11 @@ RUN python3 -m pip install virtualenv --no-cache-dir
 RUN python3 -m virtualenv --python=/usr/bin/python3 $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
+WORKDIR /jm/clientserver
+
 # Install dependencies:
 RUN set -ex \
-	&& pip install -r /jm/clientserver/requirements-dev.txt \
+	&& pip install -r requirements-dev.txt \
 	&& python setupall.py --daemon \
 	&& python setupall.py --client-bitcoin
 
