@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  joinmarket:
+    build:
+      context: ./
+      dockerfile: Dockerfile-joinmarket
+      args:
+        VERSION: 0.6.1
+    image: joinmarket:0.6.1
+    volumes:
+      - ./joinmarket/joinmarket.cfg:/jm/scripts/joinmarket.cfg
+      - ./joinmarket/wallets:/jm/scripts/wallets
