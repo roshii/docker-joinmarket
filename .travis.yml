@@ -1,0 +1,10 @@
+sudo: required
+services:
+  - docker
+
+script:
+  - docker build --tag joinmarket .
+  - docker run joinmarket
+
+after_script:
+- docker images
