@@ -4,7 +4,7 @@ services:
 
 script:
   - docker build --tag joinmarket .
-  - docker run joinmarket python wallet-tool.py
+  - docker run --stop-timeout 10 joinmarket python wallet-tool.py
 
 after_script:
 - docker images
