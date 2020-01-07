@@ -4,7 +4,6 @@ services:
 
 script:
   - docker build --tag joinmarket .
-  - docker run --stop-timeout 10 joinmarket:latest
 
 after_script:
 - docker images
